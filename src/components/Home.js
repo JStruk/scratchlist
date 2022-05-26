@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
-import useTypewriter from "react-typewriter-hook";
-import { useHistory } from "react-router-dom";
+// import useTypewriter from "react-typewriter-hook";
+import { useNavigate } from "react-router-dom";
 
 const ListTypes = [
     'ToDo List',
@@ -15,15 +15,15 @@ let index = 0;
 
 export default function Home() {
     const [listType, setListType] = useState("List List List");
-    const history = useHistory();
+    const navigate = useNavigate();
     const intervalRef = useRef({});
-    const name = useTypewriter(listType);
+    // const name = useTypewriter(listType);
 
     const createNewList = () => {
         // get list id
         // push to list page with new id
         const listId = '123'
-        history.push(`/list?listId=${listId}`)
+        navigate(`/list?listId=${listId}`)
     }
 
     useEffect(
@@ -52,7 +52,7 @@ export default function Home() {
                         <div className="divide-y divide-gray-200 text-center">
                             <div className="py-8 text-base leading-6 space-y-4 text-gray-700 sm:text-lg sm:leading-7">
                                 <p>The one-stop application for </p>
-                                <p className="cursor">{name}</p>
+                                {/*<p className="cursor">{name}</p>*/}
                             </div>
                             <div className="pt-6 text-base leading-6 font-bold sm:text-lg sm:leading-7">
                                 {/* <Link to={'list'} className="text-cyan-600 hover:text-cyan-700 border rounded-xl bg-teal-400 p-4"> Get Started! &rarr;</Link> */}

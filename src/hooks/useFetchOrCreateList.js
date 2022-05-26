@@ -1,9 +1,9 @@
-import { useHistory, useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 import { useEffect } from "react";
 
 export const useFetchOrCreateList = (setListId, setTodos, todos) => {
-    const history = useHistory()
+    const navigate = useNavigate()
 
     const useQuery = () => {
         return new URLSearchParams(useLocation().search);
@@ -17,7 +17,7 @@ export const useFetchOrCreateList = (setListId, setTodos, todos) => {
             let list;
             if (listId) {
                 console.log('hi');
-                list = await fetchList(listIdFromParams, setListId, setTodos) || await createListWithId(listIdFromParams, setListId, setTodos, history)
+                list = await fetchList(listIdFromParams, setListId, setTodos) || await createListWithId(listIdFromParams, setListId, setTodos, navigate)
                 setListId(listId)
 
                 console.log(list);
@@ -27,7 +27,7 @@ export const useFetchOrCreateList = (setListId, setTodos, todos) => {
 
                 return
             }
-            await createList(setListId, history)
+            await createList(setListId, navigate)
         }
 
         fetchListFromApi(listIdFromParams)
@@ -42,22 +42,22 @@ const fetchList = async (listId, setListId, setTodos) => {
     }
 }
 
-const createListWithId = async (listId, setListId, setTodos, history) => {
+const createListWithId = async (listId, setListId, setTodos, navigate) => {
     setTodos([])
     const newListPayload = {
         id: listId,
         items: []
     }
     const list = (await axios.post('/list', newListPayload)).data
-    history.push(`list?listId=${ listId }`)
+    navigate(`?listId=${ listId }`)
     return list
 }
 
-const createList = async (setListId, history) => {
+const createList = async (setListId, navigate) => {
     const newListPayload = {
         items: []
     }
     const newListId = (await axios.post('/list', newListPayload)).data.id
     setListId(newListId);
-    history.push(`list?listId=${ newListId }`)
+    navigate(`?listId=${ newListId }`)
 }

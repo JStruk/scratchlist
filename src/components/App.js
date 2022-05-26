@@ -1,16 +1,17 @@
 import React from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import ListPage from './ListPage';
 import Home from './Home';
 
 function App() {
-
-  return (
-    <Switch>
-      <Route path="/" component={Home} exact />
-      <Route path="/list" component={ListPage} />
-    </Switch>
-  );
+    return (
+        <BrowserRouter>
+            <Routes>
+                <Route path="/" element={ <Home /> } exact/>
+                <Route path="/list" element={ <ListPage /> }/>
+            </Routes>
+        </BrowserRouter>
+    );
 }
 
 export default App;
