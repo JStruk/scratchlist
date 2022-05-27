@@ -2,6 +2,8 @@ import React, { useState, useRef, useEffect } from 'react'
 import TodoList from './TodoList'
 import axios from "axios";
 import { useFetchOrCreateList } from "../hooks/useFetchOrCreateList";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 axios.defaults.baseURL = 'http://localhost:3000';
 
@@ -9,6 +11,7 @@ export default function ListPage() {
     const [todos, setTodos] = useState([])
     const [listId, setListId] = useState('')
     const todoNameRef = useRef()
+    const currentLink = window.location.href;
 
     useFetchOrCreateList(setListId, setTodos, todos);
 
@@ -51,6 +54,12 @@ export default function ListPage() {
         e.preventDefault()
     }
 
+    const copyLinkToClipboard = async () => {
+        navigator.clipboard.writeText(currentLink)
+        toast("Shareable link copied to clipboard!", {toastId: 'no-duplicates'})
+    }
+
+
     return (
         <div
             className="w-full max-h-screen overflow-y-scroll h-screen flex items-center justify-center font-sans bg-gradient-to-b from-teal-500 via-teal-400 to-blue-600">
@@ -90,7 +99,22 @@ export default function ListPage() {
                         Clear completed
                     </button>
                 </div>
+                <div className="flex flex-col text-center text-gray-500 mt-2 items-center">
+                    <span className="mb-3"> Share this list with your friends! </span>
+                    <input
+                        className=" text-center mb-2 border border-gray-300 rounded-lg mb-3"
+                        value={currentLink}
+                        readOnly
+                    />
+                    <button
+                        onClick={() => copyLinkToClipboard()}
+                        className="bg-blue-200 w-auto mt-2 p-2 rounded-xl"
+                    >
+                        Copy!
+                    </button>
+                </div>
             </div>
+            <ToastContainer limit={2} />
         </div>
     )
 }
