@@ -19,19 +19,16 @@ export const useFetchOrCreateList = (setListId, setTodos, todos) => {
                 console.log('hi');
                 list = await fetchList(listIdFromParams, setListId, setTodos) || await createListWithId(listIdFromParams, setListId, setTodos, navigate)
                 setListId(listId)
-
-                console.log(list);
                 if (list.listItems) {
                     setTodos(list.listItems.sort((a, b) => a.id > b.id))
                 }
-
                 return
             }
             await createList(setListId, navigate)
         }
 
         fetchListFromApi(listIdFromParams)
-    }, [])
+    }, [false])
 }
 
 const fetchList = async (listId, setListId, setTodos) => {
@@ -43,7 +40,6 @@ const fetchList = async (listId, setListId, setTodos) => {
 }
 
 const createListWithId = async (listId, setListId, setTodos, navigate) => {
-    setTodos([])
     const newListPayload = {
         id: listId,
         items: []
@@ -57,7 +53,7 @@ const createList = async (setListId, navigate) => {
     const newListPayload = {
         items: []
     }
-    const newListId = (await axios.post('/list', newListPayload)).data.id
-    setListId(newListId);
-    navigate(`?listId=${ newListId }`)
+    const newList = (await axios.post('/list', newListPayload)).data
+    navigate(`?listId=${ newList.id }`)
+    return newList
 }

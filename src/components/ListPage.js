@@ -5,7 +5,6 @@ import { useFetchOrCreateList } from "../hooks/useFetchOrCreateList";
 
 axios.defaults.baseURL = 'http://localhost:3000';
 
-
 export default function ListPage() {
     const [todos, setTodos] = useState([])
     const [listId, setListId] = useState('')
@@ -47,10 +46,6 @@ export default function ListPage() {
         const newTodos = todos.filter(todo => !todo.complete)
         setTodos(newTodos)
     }
-
-    useEffect(() => {
-        console.log('todos', todos);
-    }, [todos])
 
     const handleSubmit = (e) => {
         e.preventDefault()
