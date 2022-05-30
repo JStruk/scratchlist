@@ -102,7 +102,7 @@ export default function ListPage() {
                 <div className="flex flex-col text-center text-gray-500 mt-2 items-center">
                     <span className="mb-3"> Share this list with your friends! </span>
                     <input
-                        className=" text-center mb-2 border border-gray-300 rounded-lg mb-3"
+                        className="w-full text-center mb-2 border border-gray-300 rounded-lg mb-3"
                         value={currentLink}
                         readOnly
                     />
