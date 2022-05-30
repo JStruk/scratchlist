@@ -11,16 +11,12 @@ const ListTypes = [
     'Ranking List',
     'CheckList'
 ];
-let index = 0;
 
 export default function Home() {
     const navigate = useNavigate();
 
     const createNewList = () => {
-        // get list id
-        // push to list page with new id
-        const listId = '123'
-        navigate(`/list?listId=${listId}`)
+        navigate('/list')
     }
 
     return (
@@ -37,7 +33,7 @@ export default function Home() {
                                 <p>The one-stop application for </p>
                                 <TypeWriterEffect
                                     textStyle={{
-                                        'text-align': 'center'
+                                        'textAlign': 'center'
                                     }}
                                     cursorColor="#3F3D56"
                                     multiText={ListTypes}
