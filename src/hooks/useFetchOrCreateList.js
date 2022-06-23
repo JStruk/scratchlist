@@ -2,7 +2,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 import { useEffect } from "react";
 
-export const useFetchOrCreateList = (setListId, setTodos, todos) => {
+export const useFetchOrCreateList = (setListId, setTitle, setTodos, todos) => {
     const navigate = useNavigate()
 
     const useQuery = () => {
@@ -20,6 +20,9 @@ export const useFetchOrCreateList = (setListId, setTodos, todos) => {
                 : list = await createList(navigate)
 
             setListId(list.id)
+            if (list.title) {
+                setTitle(list.title)
+            }
             if (list.listItems) {
                 setTodos(list.listItems.sort((a, b) => a.id > b.id))
             }

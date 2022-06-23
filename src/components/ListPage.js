@@ -1,20 +1,23 @@
-import React, { useState, useRef, useEffect } from 'react'
+import React, { useState, useRef, useEffect, useCallback } from 'react'
 import TodoList from './TodoList'
 import axios from "axios";
 import { useFetchOrCreateList } from "../hooks/useFetchOrCreateList";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import useDebounce from '../hooks/useDebounce';
 
 axios.defaults.baseURL = 'http://localhost:3000';
 
 export default function ListPage() {
     const [todos, setTodos] = useState([])
     const [listId, setListId] = useState('')
+    const [showCompleted, setShowCompleted] = useState(true)
+    const [title, setTitle] = useState('')
+
     const todoNameRef = useRef()
     const currentLink = window.location.href;
-    const [showCompleted, setShowCompleted] = useState(true)
 
-    useFetchOrCreateList(setListId, setTodos, todos);
+    useFetchOrCreateList(setListId, setTitle, setTodos, todos);
 
     useEffect(() => {
         const persistTodos = async () => {
@@ -61,6 +64,17 @@ export default function ListPage() {
             : JSON.parse(JSON.stringify(todos.filter(t => !t.complete)))
     }
 
+    const persistTitle = async () => {
+        if (!title) return
+        await axios.post('/updateList/title', { id: listId, title })
+    }
+
+    const debouncedPersistTitle = useDebounce(persistTitle, 500);
+
+    useEffect(() => {
+        debouncedPersistTitle();
+    }, [title])
+
     return (
         <div
             className="w-full max-h-screen overflow-y-scroll h-screen flex items-center justify-center font-sans bg-gradient-to-b from-teal-500 via-teal-400 to-blue-600">
@@ -71,6 +85,9 @@ export default function ListPage() {
                         className="focus:outline-none w-full rounded p-2 mb-4 focus:ring focus:border-teal-500 text-center text-xl"
                         placeholder="Todo List Title (you can edit me)"
                         title="Click to edit list title"
+                        value={title}
+                        onChange={(e) => setTitle(e.target.value)}
+                        onBlur={() => persistTitle()}
                     >
                     </input>
                 </div>
