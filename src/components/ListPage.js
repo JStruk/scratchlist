@@ -12,6 +12,7 @@ export default function ListPage() {
     const [listId, setListId] = useState('')
     const todoNameRef = useRef()
     const currentLink = window.location.href;
+    const [showCompleted, setShowCompleted] = useState(true)
 
     useFetchOrCreateList(setListId, setTodos, todos);
 
@@ -24,13 +25,13 @@ export default function ListPage() {
 
         persistTodos();
 
-    }, [todos])
+    }, [todos, listId])
 
 
     function toggleTodo(id) {
         const newTodos = [...todos]
         const todo = newTodos.find(todo => todo.id === id)
-        todo.done = !todo.done
+        todo.complete = !todo.complete
         setTodos(newTodos)
     }
 
@@ -45,11 +46,6 @@ export default function ListPage() {
         todoNameRef.current.value = null
     }
 
-    function handleClearTodos() {
-        const newTodos = todos.filter(todo => !todo.complete)
-        setTodos(newTodos)
-    }
-
     const handleSubmit = (e) => {
         e.preventDefault()
     }
@@ -59,6 +55,11 @@ export default function ListPage() {
         toast("Shareable link copied to clipboard!", { toastId: 'no-duplicates' })
     }
 
+    const getTodosToShow = () => {
+        return showCompleted
+            ? JSON.parse(JSON.stringify(todos))
+            : JSON.parse(JSON.stringify(todos.filter(t => !t.complete)))
+    }
 
     return (
         <div
@@ -89,14 +90,14 @@ export default function ListPage() {
                     </div>
                 </form>
                 <div className="mt-8 h-auto flex justify-center shadow border">
-                    <TodoList todos={JSON.parse(JSON.stringify(todos))} toggleTodo={toggleTodo} />
+                    <TodoList todos={getTodosToShow()} toggleTodo={toggleTodo} />
                 </div>
                 <div className="flex justify-end mt-4 ">
                     <button
                         className="p-2 border rounded-xl text-white bg-red-500 focus:outline-none focus:ring focus:border-teal-500"
-                        onClick={handleClearTodos}
+                        onClick={() => setShowCompleted(!showCompleted)}
                     >
-                        Clear completed
+                        Toggle Completed
                     </button>
                 </div>
                 <div className="flex flex-col text-center text-gray-500 mt-2 items-center">
