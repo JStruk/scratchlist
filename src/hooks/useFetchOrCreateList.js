@@ -31,7 +31,7 @@ export const useFetchOrCreateList = (setListId, setTodos, todos) => {
 
 const fetchList = async (listId) => {
     try {
-        return (await axios.get(`/list?listId=${ listId }`)).data
+        return (await axios.get(`/list?listId=${listId}`)).data
     } catch (e) {
         console.log('getting list failed', e);
     }
@@ -43,12 +43,12 @@ const createListWithId = async (listId, navigate) => {
         listItems: []
     }
     const list = (await axios.post('/list', newListPayload)).data
-    navigate(`?listId=${ listId }`)
+    navigate(`?listId=${listId}`)
     return list
 }
 
 const createList = async (navigate) => {
     const newList = (await axios.post('/list')).data
-    navigate(`?listId=${ newList.id }`)
+    navigate(`?listId=${newList.id}`)
     return newList
 }
