@@ -11,7 +11,7 @@ export default function Todo({ todo, toggleTodo }) {
             <td className="text-center border px-8 py-4">{todo.id}</td>
             <td className="text-center border px-8 py-4">{todo.description}</td>
             <td className="text-center border px-8 py-4">
-                <input type="checkbox" className="h-7 w-7" onChange={handleTodoClick} />
+                <input type="checkbox" className="h-7 w-7" onChange={handleTodoClick} checked={todo.complete} />
             </td>
         </tr>
     )
