@@ -1,12 +1,10 @@
 import React, { useState, useRef, useEffect } from 'react'
 import TodoList from './TodoList'
-import axios from "axios";
+import client from '../api/client'
 import { useFetchOrCreateList } from "../hooks/useFetchOrCreateList";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import useDebounce from '../hooks/useDebounce';
-
-axios.defaults.baseURL = 'http://localhost:3001';
 
 export default function ListPage() {
     const [todos, setTodos] = useState([])
@@ -22,7 +20,7 @@ export default function ListPage() {
     useEffect(() => {
         const persistTodos = async () => {
             if (listId) {
-                await axios.post('/updateList', { id: listId, items: todos })
+                await client.post('/updateList', { id: listId, items: todos })
             }
         }
 
@@ -66,7 +64,7 @@ export default function ListPage() {
 
     const persistTitle = async () => {
         if (!title) return
-        await axios.post('/updateList/title', { id: listId, title })
+        await client.post('/updateList/title', { id: listId, title })
     }
 
     const debouncedPersistTitle = useDebounce(persistTitle, 500);

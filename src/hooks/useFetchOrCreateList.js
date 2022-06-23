@@ -1,5 +1,5 @@
 import { useNavigate, useLocation } from "react-router-dom";
-import axios from "axios";
+import client from "../api/client";
 import { useEffect } from "react";
 
 export const useFetchOrCreateList = (setListId, setTitle, setTodos, todos) => {
@@ -35,7 +35,7 @@ export const useFetchOrCreateList = (setListId, setTitle, setTodos, todos) => {
 
 const fetchList = async (listId) => {
     try {
-        return (await axios.get(`/list?listId=${listId}`)).data
+        return (await client.get(`/list?listId=${listId}`)).data
     } catch (e) {
         console.log('getting list failed', e);
     }
@@ -46,13 +46,13 @@ const createListWithId = async (listId, navigate) => {
         id: listId,
         listItems: []
     }
-    const list = (await axios.post('/list', newListPayload)).data
+    const list = (await client.post('/list', newListPayload)).data
     navigate(`?listId=${listId}`)
     return list
 }
 
 const createList = async (navigate) => {
-    const newList = (await axios.post('/list')).data
+    const newList = (await client.post('/list')).data
     navigate(`?listId=${newList.id}`)
     return newList
 }
