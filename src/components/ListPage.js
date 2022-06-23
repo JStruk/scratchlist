@@ -18,7 +18,7 @@ export default function ListPage() {
     useEffect(() => {
         const persistTodos = async () => {
             if (listId) {
-                await axios.post('/updateList', {id: listId, items: todos})
+                await axios.post('/updateList', { id: listId, items: todos })
             }
         }
 
@@ -39,7 +39,7 @@ export default function ListPage() {
 
         if (name === '') return
         setTodos(prevTodos => {
-            return [{id: prevTodos.length + 1, description: name, complete: false}, ...prevTodos]
+            return [{ id: prevTodos.length + 1, description: name, complete: false }, ...prevTodos]
         })
 
         todoNameRef.current.value = null
@@ -56,7 +56,7 @@ export default function ListPage() {
 
     const copyLinkToClipboard = async () => {
         navigator.clipboard.writeText(currentLink)
-        toast("Shareable link copied to clipboard!", {toastId: 'no-duplicates'})
+        toast("Shareable link copied to clipboard!", { toastId: 'no-duplicates' })
     }
 
 
@@ -73,28 +73,28 @@ export default function ListPage() {
                     >
                     </input>
                 </div>
-                <hr/>
+                <hr />
                 <form onSubmit={handleSubmit}>
                     <div className="flex mt-8 justify-center">
                         <input
                             className="shadow appearance-none border rounded md:w-1/2 w-full py-2 px-3 mr-4 text-gray-500 focus:outline-none focus:ring focus:border-teal-500"
                             placeholder="Add Item"
-                            ref={ todoNameRef }
+                            ref={todoNameRef}
                         />
                         <button
                             className="flex-no-shrink p-2 border-2 rounded border-teal-500 text-teal-500  hover:text-white hover:bg-teal-500 focus:outline-none focus:ring focus:border-teal-500"
-                            onClick={ handleAddTodo }>
+                            onClick={handleAddTodo}>
                             Add
                         </button>
                     </div>
                 </form>
                 <div className="mt-8 h-auto flex justify-center shadow border">
-                    <TodoList todos={ JSON.parse(JSON.stringify(todos)) } toggleTodo={ toggleTodo }/>
+                    <TodoList todos={JSON.parse(JSON.stringify(todos))} toggleTodo={toggleTodo} />
                 </div>
                 <div className="flex justify-end mt-4 ">
                     <button
                         className="p-2 border rounded-xl text-white bg-red-500 focus:outline-none focus:ring focus:border-teal-500"
-                        onClick={ handleClearTodos }
+                        onClick={handleClearTodos}
                     >
                         Clear completed
                     </button>
