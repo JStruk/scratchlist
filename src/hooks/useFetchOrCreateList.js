@@ -29,7 +29,8 @@ export const useFetchOrCreateList = (setListId, setTitle, setTodos, todos) => {
         }
 
         fetchListFromApi(listIdFromParams)
-    }, [false])
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [])
 }
 
 const fetchList = async (listId) => {

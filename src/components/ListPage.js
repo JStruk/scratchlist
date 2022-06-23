@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect, useCallback } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import TodoList from './TodoList'
 import axios from "axios";
 import { useFetchOrCreateList } from "../hooks/useFetchOrCreateList";
@@ -6,7 +6,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import useDebounce from '../hooks/useDebounce';
 
-axios.defaults.baseURL = 'http://localhost:3000';
+axios.defaults.baseURL = 'http://localhost:3001';
 
 export default function ListPage() {
     const [todos, setTodos] = useState([])
@@ -73,6 +73,7 @@ export default function ListPage() {
 
     useEffect(() => {
         debouncedPersistTitle();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [title])
 
     return (
