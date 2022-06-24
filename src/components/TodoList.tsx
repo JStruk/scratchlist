@@ -1,7 +1,13 @@
 import React from 'react'
+import { ListItem } from '../interfaces/Todo'
 import Todo from './Todo'
 
-export default function TodoList({ todos, toggleTodo }) {
+interface TodoListProps {
+    todos: Array<ListItem>
+    toggleTodo: (id: number) => void
+}
+
+export default function TodoList({ todos, toggleTodo }: TodoListProps): JSX.Element {
     return (
         <div className="w-full max-w-lg lg:max-w-2xl justify-center">
             <table className="table-fixed" >
