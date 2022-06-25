@@ -5,12 +5,6 @@ import reportWebVitals from './reportWebVitals';
 import './assets/index.css';
 import { createRoot } from "react-dom/client";
 
-// const rootElement = document.getElementById("root");
-// const root: Root = createRoot(rootElement);
-// root.render(
-//     <App />
-// );
-
 const container = document.getElementById('root');
 const root = createRoot(container!);
 root.render(<App />);
