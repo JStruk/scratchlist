@@ -1,9 +1,9 @@
 import { useState, useCallback, useEffect } from 'react'
 
-export default function useDebounce(callback, delay) {
+export default function useDebounce(callback: (...args: any[]) => void, delay: number) {
     const [debounceReady, setDebounceReady] = useState(true);
 
-    const debouncedCallback = useCallback((...args) => {
+    const debouncedCallback = useCallback((...args: any[]) => {
         if (debounceReady) {
             callback(...args);
             setDebounceReady(false);

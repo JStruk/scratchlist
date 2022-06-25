@@ -5,14 +5,15 @@ import { useFetchOrCreateList } from "../hooks/useFetchOrCreateList";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import useDebounce from '../hooks/useDebounce';
+import { ListItem } from '../interfaces/Todo';
 
 export default function ListPage() {
-    const [todos, setTodos] = useState([])
-    const [listId, setListId] = useState('')
-    const [showCompleted, setShowCompleted] = useState(true)
-    const [title, setTitle] = useState('')
+    const [todos, setTodos] = useState<Array<ListItem>>([])
+    const [listId, setListId] = useState<string>('')
+    const [title, setTitle] = useState<string>('')
+    const [showCompleted, setShowCompleted] = useState<boolean>(true)
 
-    const todoNameRef = useRef()
+    const todoNameRef = useRef<HTMLInputElement>(null)
     const currentLink = window.location.href;
 
     useFetchOrCreateList(setListId, setTitle, setTodos, todos);
@@ -29,14 +30,16 @@ export default function ListPage() {
     }, [todos, listId])
 
 
-    function toggleTodo(id) {
+    function toggleTodo(id: number) {
         const newTodos = [...todos]
         const todo = newTodos.find(todo => todo.id === id)
+        if (!todo) return
         todo.complete = !todo.complete
         setTodos(newTodos)
     }
 
-    async function handleAddTodo(e) {
+    async function handleAddTodo(e: any) {
+        if (!todoNameRef || !todoNameRef.current) return
         const name = todoNameRef.current.value
 
         if (name === '') return
@@ -44,10 +47,10 @@ export default function ListPage() {
             return [{ id: prevTodos.length + 1, description: name, complete: false }, ...prevTodos]
         })
 
-        todoNameRef.current.value = null
+        todoNameRef.current.value = ''
     }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = (e: any) => {
         e.preventDefault()
     }
 

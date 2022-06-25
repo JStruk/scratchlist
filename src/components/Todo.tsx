@@ -1,8 +1,13 @@
 import React from 'react'
+import { ListItem } from '../interfaces/Todo'
 
-export default function Todo({ todo, toggleTodo }) {
+interface TodoProps {
+    todo: ListItem
+    toggleTodo: (id: number) => void
+}
+
+export default function Todo({ todo, toggleTodo }: TodoProps): JSX.Element {
     function handleTodoClick() {
-        console.log('toggle todo with id#', todo.id)
         toggleTodo(todo.id)
     }
 

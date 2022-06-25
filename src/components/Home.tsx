@@ -13,7 +13,7 @@ const ListTypes = [
     'CheckList'
 ];
 
-export default function Home() {
+export default function Home(): JSX.Element {
     const navigate = useNavigate();
 
     const createNewList = () => {
@@ -33,7 +33,7 @@ export default function Home() {
     return (
         <HomeContainer>
             <Content>
-                <GradientBackgroundCard/>
+                <GradientBackgroundCard />
                 <MainCard>
                     <MainCardContent>
                         <Header> ScratchList </Header>
@@ -41,18 +41,18 @@ export default function Home() {
                             <TypeWriterContainer>
                                 <p>The one-stop application for </p>
                                 <TypeWriterEffect
-                                    textStyle={ {
+                                    textStyle={{
                                         'textAlign': 'center'
-                                    } }
+                                    }}
                                     cursorColor="#3F3D56"
-                                    multiText={ ListTypes }
-                                    multiTextDelay={ 1000 }
+                                    multiText={ListTypes}
+                                    multiTextDelay={1000}
                                     multiTextLoop
-                                    typeSpeed={ 100 }
+                                    typeSpeed={100}
                                 />
                             </TypeWriterContainer>
                             <ActionButtonContainer className="">
-                                <GetStartedButton onClick={ createNewList }> Get Started! &rarr;</GetStartedButton>
+                                <GetStartedButton onClick={createNewList}> Get Started! &rarr;</GetStartedButton>
                             </ActionButtonContainer>
                         </div>
                     </MainCardContent>
